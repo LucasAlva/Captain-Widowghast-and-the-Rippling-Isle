@@ -1,0 +1,18 @@
+<!--Saved by Quest 5.8.6836.13983-->
+<asl version="580">
+  <include ref="English.aslx" />
+  <include ref="Core.aslx" />
+  <game name="Captain Widowghast and the Rippling Isle">
+    <gameid>ef1bf547-1980-475c-b7be-5207097b7b7e</gameid>
+    <version>1.0</version>
+    <firstpublished>2019</firstpublished>
+  </game>
+  <object name="room">
+    <inherit name="editor_room" />
+    <isroom />
+    <object name="player">
+      <inherit name="editor_object" />
+      <inherit name="editor_player" />
+    </object>
+  </object>
+</asl>
