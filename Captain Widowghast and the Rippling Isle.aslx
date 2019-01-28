@@ -19,18 +19,46 @@
     <showhealth type="boolean">false</showhealth>
     <attr name="feature_limitinventory" type="boolean">false</attr>
     <Food type="int">0</Food>
+    <Crew type="int">7</Crew>
     <pov type="object">player</pov>
-    <Crew type="int">20</Crew>
   </game>
   <object name="Beach">
     <inherit name="editor_room" />
     <isroom />
-    <description type="string"></description>
+    <description>You are on the beach at the southernmost tip of the island.</description>
+    <descprefix>You are landing on an island for more food. Your ship needs to be repaired. You set out with 7 crew and have 24 hours</descprefix>
+    <objectslistprefix type="string"></objectslistprefix>
+    <usedefaultprefix />
+    <exitslistprefix>To the west is the beach, leading to the cave. To the north is a path through the jungle. To the east is the beach.</exitslistprefix>
     <object name="player">
       <inherit name="editor_object" />
       <inherit name="editor_player" />
       <statusattributes type="stringdictionary" />
     </object>
+    <exit alias="west" to="Beach_West_1">
+      <inherit name="westdirection" />
+    </exit>
+    <exit alias="north" to="First_Jungle_Path">
+      <inherit name="northdirection" />
+    </exit>
+    <exit alias="east" to="Beach_East_1">
+      <inherit name="eastdirection" />
+    </exit>
+  </object>
+  <object name="First_Jungle_Path">
+    <inherit name="editor_room" />
+    <objectslistprefix type="string"></objectslistprefix>
+    <descprefix type="string"></descprefix>
+    <enter type="script">
+    </enter>
+    <beforeenter type="script">
+      if (Boar.Dead = false) {
+        msg ("You enter a clearing in the jungle with a wild boar peacefully grazing. It looks like it could be carved up to yield lots of meat, though its tusks and hooves look deadly. Almost as if it can tell what you’re thinking, it grunts and kicks its back legs.")
+      }
+      else {
+        msg ("You enter a clearing in the jungle torn up by your previous fight. The remains of two of your crew mates lie bloody on the ground.")
+      }
+    </beforeenter>
     <object name="Boar">
       <inherit name="editor_object" />
       <displayverbs type="stringlist">
@@ -39,11 +67,312 @@
       </displayverbs>
       <attr name="feature_startscript" type="boolean">false</attr>
       <useindividualverblist type="boolean">false</useindividualverblist>
+      <Dead type="boolean">false</Dead>
       <attr name="_initialise_" type="script">
       </attr>
       <kill type="script">
-        game.Food = game.Food + 3
+        if (Boar.Dead = true) {
+          msg ("You already fought the boar, remember? Those two crew members certainly do.")
+        }
+        else {
+          game.Food = game.Food + 3
+          Boar.Dead = true
+          game.Crew = game.Crew - 2
+          msg ("You order your crew forward and fight! You slay the beast. Unfortunately, two of your crew are skewered by the boars mighty tusks and perish.")
+        }
       </kill>
     </object>
+    <exit alias="south" to="Beach">
+      <inherit name="southdirection" />
+    </exit>
+    <exit alias="north" to="Jungle_Crossroads_South">
+      <inherit name="northdirection" />
+    </exit>
   </object>
+  <object name="Jungle_Crossroads_South">
+    <inherit name="editor_room" />
+    <descprefix>You find yourself at the banks of a raging river.</descprefix>
+    <objectslistprefix type="string"></objectslistprefix>
+    <description type="string"></description>
+    <exitslistprefix>To the west, you see a series of rocks jutting out at the top of a waterfall. To the east, there is an old rope bridge. You can go</exitslistprefix>
+    <exit alias="South into the jungle" to="First_Jungle_Path">
+      <inherit name="southdirection" />
+    </exit>
+    <exit alias="West to the rocks" to="Rocks_South">
+      <inherit name="westdirection" />
+    </exit>
+    <exit alias="East to the bridge" to="Shaky_Bridge">
+      <inherit name="eastdirection" />
+    </exit>
+  </object>
+  <object name="Rocks_South">
+    <inherit name="editor_room" />
+    <descprefix>You approach the rocks.</descprefix>
+    <objectslistprefix type="string"></objectslistprefix>
+    <exitslistprefix>Spray from the river hitting the rocks mists your face, and while the rocks also appear slick, it seems like they might be big enough to still be safe. You can go</exitslistprefix>
+    <onexit type="script">
+    </onexit>
+    <exit alias="Back to the riverbank" to="Jungle_Crossroads_South">
+      <inherit name="eastdirection" />
+    </exit>
+    <exit alias="Cross the rocks" to="Jungle_Pre_Fort">
+      <inherit name="northdirection" />
+    </exit>
+  </object>
+  <object name="Shaky_Bridge">
+    <inherit name="editor_room" />
+    <descprefix>You approach the bridge.</descprefix>
+    <exitslistprefix>The jungle certainly hasn’t been kind to this old rope bridge, as it is covered in moss and other plants, and several of the planks have begun to rot away.  As you test a plank with your foot, the entire structure creaks and. You can go</exitslistprefix>
+    <onexit type="script">
+      game.Crew = game.Crew - 1
+      msg ("As you carefully tip-toe your way across the bridge, you suddenly hear a crack and a yelp from behind you, turning just in time to see one of your crew members plunging into the river below. The rest of your crew makes it across without issue.")
+    </onexit>
+    <exit alias="Back to the river bank" to="Jungle_Crossroads_South">
+      <inherit name="westdirection" />
+    </exit>
+    <exit alias="Cross the bridge" to="Jungle_Pre_Fort">
+      <inherit name="northdirection" />
+    </exit>
+  </object>
+  <object name="Jungle_Pre_Fort">
+    <inherit name="editor_room" />
+    <descprefix>You continue to cut your way through the jungle.</descprefix>
+    <exitslistprefix>To the North, you see the remnants of an old fort. To the South, you can hear the dull roar of a river. You can go</exitslistprefix>
+    <exit alias="south" to="Shaky_Bridge">
+      <inherit name="southdirection" />
+    </exit>
+    <exit alias="north to the fort" to="Fort_Entrance">
+      <inherit name="northdirection" />
+    </exit>
+  </object>
+  <object name="Fort_Entrance">
+    <inherit name="editor_room" />
+    <descprefix>You come to the entryway of an old fort.</descprefix>
+    <exitslistprefix>A sturdy wooden door is partially ajar, with vines beginning to grow over the doorway. A dirt path meanders to the east. You can go</exitslistprefix>
+    <exit alias="south" to="Rocks_South">
+      <inherit name="southdirection" />
+    </exit>
+    <exit alias="enter the fort" to="Fort_1st_Floor">
+      <inherit name="northdirection" />
+    </exit>
+    <exit alias="follow the eastward path" to="Beach_East_8">
+      <inherit name="eastdirection" />
+    </exit>
+  </object>
+  <object name="Fort_1st_Floor">
+    <inherit name="editor_room" />
+    <descprefix>You enter into the ground floor of the fort.</descprefix>
+    <exitslistprefix>There’s not much left in here, save a few scattered remains of chairs and tables that plant life has thoroughly overtaken. You see two sets of stairs on the north wall, one going down and the other going up. You can go</exitslistprefix>
+    <exit alias="down" to="Fort_Entrance">
+      <inherit name="southdirection" />
+    </exit>
+    <exit alias="up" to="Fort_2nd_Floor">
+      <inherit name="northdirection" />
+    </exit>
+  </object>
+  <object name="Fort_2nd_Floor">
+    <inherit name="editor_room" />
+    <enter type="script">
+    </enter>
+    <descprefix type="string"></descprefix>
+    <description type="string"></description>
+    <beforeenter type="script">
+      msg ("You ascend the sturdy stone stairs and emerge into what likely used to be the barracks. Old rotted bedframes line the eastern and western walls, with a few sets of shelves to the north.")
+    </beforeenter>
+    <usedefaultprefix />
+    <exit alias="down" to="Fort_1st_Floor">
+      <inherit name="southdirection" />
+    </exit>
+    <object name="key">
+      <inherit name="editor_object" />
+      <take />
+      <drop type="boolean">false</drop>
+      <prefix>Upon further inspection of the shelves’ contents, you find an old iron</prefix>
+      <scenery type="boolean">false</scenery>
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <suffix>!</suffix>
+    </object>
+  </object>
+  <object name="Beach_East_1">
+    <inherit name="editor_room" />
+    <descprefix>You are on the beach.</descprefix>
+    <exitslistprefix>To the west is where your boat landed. To the east is more beach.s You can go</exitslistprefix>
+    <exit alias="east" to="Beach_East_2">
+      <inherit name="eastdirection" />
+    </exit>
+    <exit alias="west" to="Beach">
+      <inherit name="westdirection" />
+    </exit>
+  </object>
+  <object name="Beach_East_2">
+    <inherit name="editor_room" />
+    <descprefix>You are on the beach.</descprefix>
+    <exitslistprefix>To the west is more beach, leading to your boat. To the east is more beach. There is a coconut tree here. You can go</exitslistprefix>
+    <exit alias="east" to="Beach_East_3">
+      <inherit name="eastdirection" />
+    </exit>
+    <exit alias="west" to="Beach_East_1">
+      <inherit name="westdirection" />
+    </exit>
+  </object>
+  <object name="Beach_East_3">
+    <inherit name="editor_room" />
+    <descprefix>You are on the beach.</descprefix>
+    <exitslistprefix>You are on the beach. To the north is more beach. To the west is more beach, leading to your boat. You can go</exitslistprefix>
+    <exit alias="north" to="Beach_East_4">
+      <inherit name="northdirection" />
+    </exit>
+    <exit alias="west" to="Beach_East_2">
+      <inherit name="westdirection" />
+    </exit>
+  </object>
+  <object name="Beach_East_4">
+    <inherit name="editor_room" />
+    <descprefix>You are on the beach.</descprefix>
+    <exitslistprefix>That pile of rocks reminds you of your first love! To the north is more beach, to the south is more beach, leading to your boat. You can go</exitslistprefix>
+    <exit alias="north" to="Beach_East_5">
+      <inherit name="northdirection" />
+    </exit>
+    <exit alias="south" to="Beach_East_3">
+      <inherit name="southdirection" />
+    </exit>
+  </object>
+  <object name="Cave_Entrance">
+    <inherit name="editor_room" />
+    <exit alias="east" to="Beach_West_4">
+      <inherit name="eastdirection" />
+    </exit>
+  </object>
+  <object name="Middle_of_the_cave">
+    <inherit name="editor_room" />
+  </object>
+  <object name="West_Cave_Path">
+    <inherit name="editor_room" />
+  </object>
+  <object name="Tomb">
+    <inherit name="editor_room" />
+  </object>
+  <object name="East_Cave_1">
+    <inherit name="editor_room" />
+  </object>
+  <object name="East_Cave_2">
+    <inherit name="editor_room" />
+  </object>
+  <object name="East_Cave_3">
+    <inherit name="editor_room" />
+  </object>
+  <object name="Bookcase_Room">
+    <inherit name="editor_room" />
+  </object>
+  <object name="Cellar">
+    <inherit name="editor_room" />
+  </object>
+  <object name="Beach_East_8">
+    <inherit name="editor_room" />
+    <descprefix>You are on the beach.</descprefix>
+    <exitslistprefix>To the west is a dirt path that leads to the fort. To the east is more beach, leading to your boat. This path looks particularly long though. You can go</exitslistprefix>
+    <exit alias="west" to="Fort_Entrance">
+      <inherit name="westdirection" />
+    </exit>
+    <exit alias="east" to="Beach_East_7">
+      <inherit name="eastdirection" />
+    </exit>
+  </object>
+  <object name="Beach_East_7">
+    <inherit name="editor_room" />
+    <descprefix>You are on the beach.</descprefix>
+    <exitslistprefix>To the west is more beach. To the east is more beach, leading to your boat. You can go</exitslistprefix>
+    <exit alias="west" to="Beach_East_8">
+      <inherit name="westdirection" />
+    </exit>
+    <exit alias="east" to="Beach_East_6">
+      <inherit name="eastdirection" />
+    </exit>
+  </object>
+  <object name="Beach_East_6">
+    <inherit name="editor_room" />
+    <descprefix>You are on the beach.</descprefix>
+    <exitslistprefix>To the west is more beach. To the south is more beach, leading to your boat. You can go</exitslistprefix>
+    <exit alias="west" to="Beach_East_7">
+      <inherit name="westdirection" />
+    </exit>
+    <exit alias="south" to="Beach_East_5">
+      <inherit name="southdirection" />
+    </exit>
+  </object>
+  <object name="Beach_East_5">
+    <inherit name="editor_room" />
+    <isroom type="boolean">false</isroom>
+    <descprefix>You are on the beach.</descprefix>
+    <exitslistprefix>To the north is more beach. To the south is more beach, leading to your boat. You can go</exitslistprefix>
+    <exit alias="north" to="Beach_East_6">
+      <inherit name="northdirection" />
+    </exit>
+    <exit alias="south" to="Beach_East_4">
+      <inherit name="southdirection" />
+    </exit>
+  </object>
+  <object name="Beach_West_1">
+    <inherit name="editor_room" />
+    <descprefix>You are on the beach.</descprefix>
+    <exitslistprefix>To the west is the beach, leading to the cave. To the east is the beach where your boat is.You can go</exitslistprefix>
+    <exit alias="east" to="Beach">
+      <inherit name="eastdirection" />
+    </exit>
+    <exit alias="west" to="Beach_West_2">
+      <inherit name="westdirection" />
+    </exit>
+  </object>
+  <object name="Beach_West_2">
+    <inherit name="editor_room" />
+    <descprefix>You are on the beach.</descprefix>
+    <exitslistprefix>These rocks remind you of your favorite horse! To the west is more beach, leading to the cave. To the east is more beach, leading to your boat. You can go</exitslistprefix>
+    <exit alias="east" to="Beach_West_1">
+      <inherit name="eastdirection" />
+    </exit>
+    <exit alias="west" to="Beach_West_3">
+      <inherit name="westdirection" />
+    </exit>
+  </object>
+  <object name="Beach_West_3">
+    <inherit name="editor_room" />
+    <descprefix>You are on the beach.</descprefix>
+    <exitslistprefix>To the west is more beach, leading to the cave. To the east is more beach, leading to your boat. You can go</exitslistprefix>
+    <exit alias="east" to="Beach_West_2">
+      <inherit name="eastdirection" />
+    </exit>
+    <exit alias="west" to="Beach_West_4">
+      <inherit name="westdirection" />
+    </exit>
+    <object name="Tidal_Pool">
+      <inherit name="editor_object" />
+      <Is_Full />
+      <inspect type="script">
+        if (Tidal_Pool.Is_Full = true) {
+          msg ("You discover a tidal pool! It has crabs to eat.")
+          game.Food = game.Food + 1
+          Tidal_Pool.Is_Full = false
+        }
+        else {
+          msg ("The tidal pool is empty")
+        }
+      </inspect>
+    </object>
+  </object>
+  <object name="Beach_West_4">
+    <inherit name="editor_room" />
+    <descprefix>You are on the beach.</descprefix>
+    <exitslistprefix>To the west is the entrance to a cave. To the east is more beach, leading to your boat. You can go</exitslistprefix>
+    <exit alias="east" to="Beach_West_3">
+      <inherit name="eastdirection" />
+    </exit>
+    <exit alias="west" to="Cave_Entrance">
+      <inherit name="westdirection" />
+    </exit>
+  </object>
+  <verb>
+    <property>inspect</property>
+    <pattern>inspect</pattern>
+    <defaultexpression>"You can't inspect " + object.article + "."</defaultexpression>
+  </verb>
 </asl>
