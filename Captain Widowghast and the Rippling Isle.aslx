@@ -172,14 +172,14 @@
   </object>
   <object name="Fort_2nd_Floor">
     <inherit name="editor_room" />
-    <enter type="script">
-    </enter>
     <descprefix type="string"></descprefix>
     <description type="string"></description>
+    <usedefaultprefix />
+    <enter type="script">
+    </enter>
     <beforeenter type="script">
       msg ("You ascend the sturdy stone stairs and emerge into what likely used to be the barracks. Old rotted bedframes line the eastern and western walls, with a few sets of shelves to the north.")
     </beforeenter>
-    <usedefaultprefix />
     <exit alias="down" to="Fort_1st_Floor">
       <inherit name="southdirection" />
     </exit>
@@ -239,24 +239,83 @@
   </object>
   <object name="Cave_Entrance">
     <inherit name="editor_room" />
+    <descprefix>You are at the cave entrance</descprefix>
+    <exitslistprefix>To the north is the cave. To the east is the beach, leading to your boat. You can go</exitslistprefix>
     <exit alias="east" to="Beach_West_4">
       <inherit name="eastdirection" />
+    </exit>
+    <object name="Map">
+      <inherit name="editor_object" />
+      <take />
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <prefix>A skeleton propped up against the wall holds a</prefix>
+      <suffix>. </suffix>
+      <takemsg>The Map seems to depict the path of the cave, with a fork in the road not far inward.  The western path is marked with a red x.</takemsg>
+    </object>
+    <exit alias="into the cave" to="Middle_of_the_cave">
+      <inherit name="northdirection" />
     </exit>
   </object>
   <object name="Middle_of_the_cave">
     <inherit name="editor_room" />
+    <descprefix>You are in a cave</descprefix>
+    <exitslistprefix>To the west there is a path. To the east there is a path. To the south is the mouth of the cave, leading out to the beach. You can go</exitslistprefix>
+    <exit alias="mouth of the cave" to="Cave_Entrance">
+      <inherit name="southdirection" />
+    </exit>
+    <exit alias="west" to="West_Cave_Path">
+      <inherit name="westdirection" />
+    </exit>
+    <exit alias="east" to="East_Cave_1">
+      <inherit name="eastdirection" />
+    </exit>
   </object>
   <object name="West_Cave_Path">
     <inherit name="editor_room" />
+    <descprefix>You are in a cave</descprefix>
+    <exitslistprefix>To the west are steps leading down to giant stone doors, engraved with angelic features worn by years of constant dripping. To the east is more cave. You can go</exitslistprefix>
+    <exit alias="east" to="Middle_of_the_cave">
+      <inherit name="eastdirection" />
+    </exit>
+    <exit alias="west" to="Tomb">
+      <inherit name="westdirection" />
+    </exit>
   </object>
   <object name="Tomb">
     <inherit name="editor_room" />
+    <Pillaged type="boolean">false</Pillaged>
+    <enter type="script">
+      if (Tomb.Pillaged = False) {
+        msg ("Dozens of skeletons rest in indentations on the walls, still bedecked in their armor and weapons.  An old wooden chest sits in on a stone slab table in the center of the room. The hair on the back of your neck stands up and you get the distinct impression you are being watched.")
+      }
+      else {
+        msg ("Skeletal remains litter the ground, as well as the corpses of your crew. The stone slab table is empty.")
+      }
+    </enter>
+    <descprefix>You enter what appears to be a</descprefix>
+    <exit alias="east" to="West_Cave_Path">
+      <inherit name="eastdirection" />
+    </exit>
+    <exit alias="investigate" to="Stone_Slab" />
   </object>
   <object name="East_Cave_1">
     <inherit name="editor_room" />
+    <exitslistprefix>To the west is more cave. To the east is more cave. You can go</exitslistprefix>
+    <descprefix>You are in a cave</descprefix>
+    <exit alias="west" to="Middle_of_the_cave">
+      <inherit name="westdirection" />
+    </exit>
+    <exit alias="east" to="East_Cave_2">
+      <inherit name="eastdirection" />
+    </exit>
   </object>
   <object name="East_Cave_2">
     <inherit name="editor_room" />
+    <descprefix>You are in a cave</descprefix>
+    <exitslistprefix>To the west is more cave. To the east is a smooth wall with a seam around the edges. You can go</exitslistprefix>
+    <exit alias="west" to="East_Cave_1">
+      <inherit name="westdirection" />
+    </exit>
   </object>
   <object name="East_Cave_3">
     <inherit name="editor_room" />
@@ -375,4 +434,41 @@
     <pattern>inspect</pattern>
     <defaultexpression>"You can't inspect " + object.article + "."</defaultexpression>
   </verb>
+  <verb>
+    <property>investigate</property>
+    <pattern>investigate</pattern>
+    <defaultexpression>"You can't investigate " + object.article + "."</defaultexpression>
+  </verb>
+  <verb>
+    <property>openthechest</property>
+    <pattern>open the chest</pattern>
+    <defaultexpression>"You can't open the chest " + object.article + "."</defaultexpression>
+  </verb>
+  <object name="Stone_Slab">
+    <inherit name="editor_room" />
+    <beforeenter type="script">
+      if (Stone_Slab.Pillaged = False) {
+        msg ("You approach the stone table.  A variety of canopic jars sit around an ornately decorated wooden chest. The feeling that you’re being watched intensifies.")
+      }
+      else {
+        msg ("You approach the stone table. The canopic jars were knocked off the table during the struggle, and you took the wooden chest with you. Nothing more to see here.")
+      }
+    </beforeenter>
+    <Pillaged type="boolean">false</Pillaged>
+    <object name="Chest">
+      <inherit name="editor_object" />
+      <scenery type="boolean">false</scenery>
+      <Opened type="boolean">false</Opened>
+      <openthechest type="script">
+        if (Chest.Opened = False) {
+          msg ("You open the chest and find it filled with gold and precious gems! However, your excitement is tempered as you watch the eyes of each skeleton light up with a blue-green glow as they turn to face you.  One by one, the skeletons pull themselves out of their crypts and attack! After a scuffle, you and your crew are able to slay the last skeleton and abscond with the treasure, but not without suffering heavy losses yourselves.")
+          game.Crew = game.Crew - 3
+        }
+        else {
+          msg ("The chest is already looted")
+        }
+      </openthechest>
+    </object>
+    <exit alias="back to the tomb" to="Tomb" />
+  </object>
 </asl>
