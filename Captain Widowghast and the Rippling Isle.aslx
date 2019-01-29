@@ -316,15 +316,33 @@
     <exit alias="west" to="East_Cave_1">
       <inherit name="westdirection" />
     </exit>
+    <exit alias="east" to="East_Cave_3">
+      <inherit name="eastdirection" />
+    </exit>
   </object>
   <object name="East_Cave_3">
     <inherit name="editor_room" />
+    <descprefix>You are in a cave</descprefix>
+    <exit alias="west" to="East_Cave_2">
+      <inherit name="westdirection" />
+    </exit>
+    <exit alias="push button" to="Bookcase_Room" />
   </object>
   <object name="Bookcase_Room">
     <inherit name="editor_room" />
+    <exit alias="east" to="Cellar">
+      <inherit name="eastdirection" />
+    </exit>
+    <exit alias="pull book" to="East_Cave_3" />
   </object>
   <object name="Cellar">
     <inherit name="editor_room" />
+    <exit alias="west" to="Bookcase_Room">
+      <inherit name="westdirection" />
+    </exit>
+    <exit alias="east" to="Small_Library">
+      <inherit name="eastdirection" />
+    </exit>
   </object>
   <object name="Beach_East_8">
     <inherit name="editor_room" />
@@ -470,5 +488,11 @@
       </openthechest>
     </object>
     <exit alias="back to the tomb" to="Tomb" />
+  </object>
+  <object name="Small_Library">
+    <inherit name="editor_room" />
+    <exit alias="west" to="Cellar">
+      <inherit name="westdirection" />
+    </exit>
   </object>
 </asl>
