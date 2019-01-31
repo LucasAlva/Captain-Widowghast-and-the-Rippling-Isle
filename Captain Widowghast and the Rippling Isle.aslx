@@ -55,7 +55,7 @@
   </object>
   <object name="First_Jungle_Path">
     <inherit name="editor_room" />
-    <objectslistprefix>You see </objectslistprefix>
+    <objectslistprefix type="string"></objectslistprefix>
     <descprefix type="string"></descprefix>
     <enter type="script">
     </enter>
@@ -67,6 +67,10 @@
         msg ("You enter a clearing in the jungle torn up by your previous fight. The remains of two of your crew mates lie bloody on the ground.")
       }
     </beforeenter>
+    <alias>  </alias>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <prefix type="string"></prefix>
+    <suffix type="string"></suffix>
     <object name="Boar">
       <inherit name="editor_object" />
       <displayverbs type="stringlist">
@@ -89,6 +93,8 @@
           msg ("You order your crew forward and fight! You slay the beast. Unfortunately, two of your crew are skewered by the boars mighty tusks and perish.")
         }
       </kill>
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <scenery />
     </object>
     <exit alias="south" to="Beach">
       <inherit name="southdirection" />
@@ -106,6 +112,8 @@
     <beforeenter type="script">
       picture ("jungle river.png")
     </beforeenter>
+    <alias>  </alias>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
     <exit alias="South into the jungle" to="First_Jungle_Path">
       <inherit name="southdirection" />
     </exit>
@@ -123,6 +131,8 @@
     <exitslistprefix>Spray from the river hitting the rocks mists your face, and while the rocks also appear slick, it seems like they might be big enough to still be safe. You can go</exitslistprefix>
     <onexit type="script">
     </onexit>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <alias>  </alias>
     <exit alias="Back to the riverbank" to="Jungle_Crossroads_South">
       <inherit name="eastdirection" />
     </exit>
@@ -138,6 +148,8 @@
       player.Crew = player.Crew - 1
       msg ("As you carefully tip-toe your way across the bridge, you suddenly hear a crack and a yelp from behind you, turning just in time to see one of your crew members plunging into the river below. The rest of your crew makes it across without issue.")
     </onexit>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <alias>  </alias>
     <exit alias="Back to the river bank" to="Jungle_Crossroads_South">
       <inherit name="westdirection" />
     </exit>
@@ -151,6 +163,8 @@
     <exitslistprefix>To the North, you see the remnants of an old fort. To the South, you can hear the dull roar of a river. You can go</exitslistprefix>
     <beforeenter type="script">
     </beforeenter>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <alias>  </alias>
     <exit alias="south" to="Shaky_Bridge">
       <inherit name="southdirection" />
     </exit>
@@ -165,6 +179,8 @@
     <beforeenter type="script">
       picture ("fort door.png")
     </beforeenter>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <alias>  </alias>
     <exit alias="south" to="Rocks_South">
       <inherit name="southdirection" />
     </exit>
@@ -179,6 +195,8 @@
     <inherit name="editor_room" />
     <descprefix>You enter into the ground floor of the fort.</descprefix>
     <exitslistprefix>There’s not much left in here, save a few scattered remains of chairs and tables that plant life has thoroughly overtaken. You see two sets of stairs on the north wall, one going down and the other going up. You can go</exitslistprefix>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <alias>  </alias>
     <exit alias="exit fort" to="Fort_Entrance">
       <inherit name="southdirection" />
     </exit>
@@ -193,12 +211,13 @@
     <inherit name="editor_room" />
     <descprefix type="string"></descprefix>
     <description type="string"></description>
-    <usedefaultprefix />
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
     <enter type="script">
     </enter>
     <beforeenter type="script">
       msg ("You ascend the sturdy stone stairs and emerge into what likely used to be the barracks. Old rotted bedframes line the eastern and western walls, with a few sets of shelves to the north.")
     </beforeenter>
+    <alias>  </alias>
     <exit alias="down" to="Fort_1st_Floor">
       <inherit name="southdirection" />
     </exit>
@@ -218,6 +237,8 @@
     <exitslistprefix>To the west is where your boat landed. To the east is more beach.s You can go</exitslistprefix>
     <beforeenter type="script">
     </beforeenter>
+    <alias>  </alias>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
     <exit alias="east" to="Beach_East_2">
       <inherit name="eastdirection" />
     </exit>
@@ -231,6 +252,8 @@
     <exitslistprefix>To the west is more beach, leading to your boat. To the east is more beach. There is a coconut tree here. You can go</exitslistprefix>
     <beforeenter type="script">
     </beforeenter>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <alias>  </alias>
     <exit alias="east" to="Beach_East_3">
       <inherit name="eastdirection" />
     </exit>
@@ -244,6 +267,8 @@
     <exitslistprefix>You are on the beach. To the north is more beach. To the west is more beach, leading to your boat. You can go</exitslistprefix>
     <beforeenter type="script">
     </beforeenter>
+    <alias>  </alias>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
     <exit alias="north" to="Beach_East_4">
       <inherit name="northdirection" />
     </exit>
@@ -257,6 +282,8 @@
     <exitslistprefix>That pile of rocks reminds you of your first love! To the north is more beach, to the south is more beach, leading to your boat. You can go</exitslistprefix>
     <beforeenter type="script">
     </beforeenter>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <alias>  </alias>
     <exit alias="north" to="Beach_East_5">
       <inherit name="northdirection" />
     </exit>
@@ -271,6 +298,8 @@
     <beforeenter type="script">
       picture ("cave.png")
     </beforeenter>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <alias>  </alias>
     <exit alias="east" to="Beach_West_4">
       <inherit name="eastdirection" />
     </exit>
@@ -290,6 +319,8 @@
     <inherit name="editor_room" />
     <descprefix>You are in a cave</descprefix>
     <exitslistprefix>To the west there is a path. To the east there is a path. To the south is the mouth of the cave, leading out to the beach. You can go</exitslistprefix>
+    <alias>  </alias>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
     <exit alias="mouth of the cave" to="Cave_Entrance">
       <inherit name="southdirection" />
     </exit>
@@ -304,6 +335,8 @@
     <inherit name="editor_room" />
     <descprefix>You are in a cave</descprefix>
     <exitslistprefix>To the west are steps leading down to giant stone doors, engraved with angelic features worn by years of constant dripping. To the east is more cave. You can go</exitslistprefix>
+    <alias>  </alias>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
     <exit alias="east" to="Middle_of_the_cave">
       <inherit name="eastdirection" />
     </exit>
@@ -323,6 +356,8 @@
         msg ("Skeletal remains litter the ground, as well as the corpses of your crew. The stone slab table is empty.")
       }
     </enter>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <alias>  </alias>
     <exit alias="east" to="West_Cave_Path">
       <inherit name="eastdirection" />
     </exit>
@@ -332,6 +367,8 @@
     <inherit name="editor_room" />
     <exitslistprefix>To the west is more cave. To the east is more cave. You can go</exitslistprefix>
     <descprefix>You are in a cave</descprefix>
+    <alias>  </alias>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
     <exit alias="west" to="Middle_of_the_cave">
       <inherit name="westdirection" />
     </exit>
@@ -343,6 +380,8 @@
     <inherit name="editor_room" />
     <descprefix>You are in a cave</descprefix>
     <exitslistprefix>To the west is more cave. To the east is a smooth wall with a seam around the edges. You can go</exitslistprefix>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <alias>  </alias>
     <exit alias="west" to="East_Cave_1">
       <inherit name="westdirection" />
     </exit>
@@ -353,6 +392,8 @@
   <object name="East_Cave_3">
     <inherit name="editor_room" />
     <descprefix>You are in a cave</descprefix>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <alias>  </alias>
     <exit alias="west" to="East_Cave_2">
       <inherit name="westdirection" />
     </exit>
@@ -360,6 +401,9 @@
   </object>
   <object name="Bookcase_Room">
     <inherit name="editor_room" />
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <alias>  </alias>
+    <descprefix>You are in a Bookcase Room</descprefix>
     <exit alias="east" to="Cellar">
       <inherit name="eastdirection" />
     </exit>
@@ -367,6 +411,9 @@
   </object>
   <object name="Cellar">
     <inherit name="editor_room" />
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <alias>  </alias>
+    <descprefix>You are in a cellar</descprefix>
     <exit alias="west" to="Bookcase_Room">
       <inherit name="westdirection" />
     </exit>
@@ -399,6 +446,8 @@
     <exitslistprefix>To the west is a dirt path that leads to the fort. To the east is more beach, leading to your boat. This path looks particularly long though. You can go</exitslistprefix>
     <beforeenter type="script">
     </beforeenter>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <alias>  </alias>
     <exit alias="west" to="Fort_Entrance">
       <inherit name="westdirection" />
     </exit>
@@ -412,6 +461,8 @@
     <exitslistprefix>To the west is more beach. To the east is more beach, leading to your boat. You can go</exitslistprefix>
     <beforeenter type="script">
     </beforeenter>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <alias>  </alias>
     <exit alias="west" to="Beach_East_8">
       <inherit name="westdirection" />
     </exit>
@@ -425,6 +476,8 @@
     <exitslistprefix>To the west is more beach. To the south is more beach, leading to your boat. You can go</exitslistprefix>
     <beforeenter type="script">
     </beforeenter>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <alias>  </alias>
     <exit alias="west" to="Beach_East_7">
       <inherit name="westdirection" />
     </exit>
@@ -444,15 +497,20 @@
           msg ("The coconut tree is empty.")
         }
       </shake>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
     </object>
   </object>
   <object name="Beach_East_5">
     <inherit name="editor_room" />
-    <isroom type="boolean">false</isroom>
+    <isroom />
     <descprefix>You are on the beach.</descprefix>
     <exitslistprefix>To the north is more beach. To the south is more beach, leading to your boat. You can go</exitslistprefix>
     <beforeenter type="script">
     </beforeenter>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <alias>  </alias>
     <exit alias="north" to="Beach_East_6">
       <inherit name="northdirection" />
     </exit>
@@ -466,6 +524,8 @@
     <exitslistprefix>To the west is the beach, leading to the cave. To the east is the beach where your boat is.You can go</exitslistprefix>
     <beforeenter type="script">
     </beforeenter>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <alias>  </alias>
     <exit alias="east" to="Beach">
       <inherit name="eastdirection" />
     </exit>
@@ -479,6 +539,8 @@
     <exitslistprefix>These rocks remind you of your favorite horse! To the west is more beach, leading to the cave. To the east is more beach, leading to your boat. You can go</exitslistprefix>
     <beforeenter type="script">
     </beforeenter>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <alias>  </alias>
     <exit alias="east" to="Beach_West_1">
       <inherit name="eastdirection" />
     </exit>
@@ -491,12 +553,16 @@
       <shake type="script">
         if (Coconut_Tree_2.Full = true) {
           msg ("You and your crew shake vigorously. The coconut falls! You gain one juicy coconut.")
-          player.Crew = player.Food + 1
+          player.Food = player.Food + 1
+          Full = false
         }
         else {
           msg ("The coconut tree is empty.")
         }
       </shake>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
     </object>
   </object>
   <object name="Beach_West_3">
@@ -505,6 +571,8 @@
     <exitslistprefix>To the west is more beach, leading to the cave. To the east is more beach, leading to your boat. You can go</exitslistprefix>
     <beforeenter type="script">
     </beforeenter>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <alias>  </alias>
     <exit alias="east" to="Beach_West_2">
       <inherit name="eastdirection" />
     </exit>
@@ -524,6 +592,9 @@
           msg ("The tidal pool is empty")
         }
       </inspect>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
     </object>
   </object>
   <object name="Beach_West_4">
@@ -532,6 +603,8 @@
     <exitslistprefix>To the west is the entrance to a cave. To the east is more beach, leading to your boat. You can go</exitslistprefix>
     <beforeenter type="script">
     </beforeenter>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <alias>  </alias>
     <exit alias="east" to="Beach_West_3">
       <inherit name="eastdirection" />
     </exit>
@@ -565,6 +638,9 @@
         msg ("You approach the stone table. The canopic jars were knocked off the table during the struggle, and you took the wooden chest with you. Nothing more to see here.")
       }
     </beforeenter>
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <alias>  </alias>
+    <descprefix>You are in a Tomb</descprefix>
     <object name="Chest">
       <inherit name="editor_object" />
       <scenery type="boolean">false</scenery>
@@ -573,16 +649,25 @@
         if (Chest.Opened = False) {
           msg ("You open the chest and find it filled with gold and precious gems! However, your excitement is tempered as you watch the eyes of each skeleton light up with a blue-green glow as they turn to face you.  One by one, the skeletons pull themselves out of their crypts and attack! After a scuffle, you and your crew are able to slay the last skeleton and abscond with the treasure, but not without suffering heavy losses yourselves.")
           player.Crew = player.Crew - 3
+          Opened = True
         }
         else {
           msg ("The chest is already looted")
         }
       </openthechest>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
     </object>
     <exit alias="back to the tomb" to="Tomb" />
   </object>
   <object name="Small_Library">
     <inherit name="editor_room" />
+    <usedefaultprefix type="boolean">false</usedefaultprefix>
+    <alias>                 </alias>
+    <prefix>               </prefix>
+    <suffix>              </suffix>
+    <descprefix>You are in a small library</descprefix>
     <exit alias="west" to="Cellar">
       <inherit name="westdirection" />
     </exit>
@@ -622,12 +707,12 @@
         msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>As the days at sea wear on, it becomes painfully obvious the food you gathered will not be enough to get you and your crew to port.  Because of your leadership decisions on the island, the crew squabbles over who’s to blame and a group of them try to mutiny.  You and your loyal crew members manage to quash the mutiny, but there’s so little food left that even with your crew numbers so depleted you won’t be able to last to port.  You and your remaining crew starve in the open ocean.<br/>YOU DIED<br/>")
         picture ("bad ending.png")
       }
-      else if (player.Crew/2 < player.Food and player.Food < player.Crew  and game.Counter < 1440) {
+      else if (player.Crew/2 < player.Food and player.Food < player.Crew  and game.Counter > 1440 and game.Counter < 2880) {
         finish
         msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>You spend over a week at sea, and while food stores threatening to run out midway prompts an attempted mutiny, you and your loyal crew members cut down the rebelling crew.  The resulting thinning of the herd lets you spread your rations just enough to get into port and get it your hull patched before it causes the ship to sink.  After a stressful week, you and your remaining crew celebrate your relatively good fortune at the pub.<br/>YOU MADE IT!<br/>")
         picture ("good ending.png")
       }
-      else if (player.Crew/2 < player.Food and player.Food < player.Crew  and game.Counter > 1440) {
+      else if (player.Crew/2 < player.Food and player.Food < player.Crew  and game.Counter > 2880) {
         finish
         msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>As the days at sea wear on, it becomes painfully obvious the food you gathered will not be enough to get you and your crew to port.  After the events on the island, the crew blame you and your poor leadership for the predicament, and you find yourself facing a mutiny.  Your former crew tie you up and force you off of the gangplank, and you lose consciousness as you slowly sink to the bottom of the sea. <br/>YOU DIED<br/>")
         picture ("bad ending.png")
