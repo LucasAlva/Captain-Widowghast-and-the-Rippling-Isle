@@ -6,20 +6,12 @@
     <gameid>ef1bf547-1980-475c-b7be-5207097b7b7e</gameid>
     <version>1.0</version>
     <firstpublished>2019</firstpublished>
-    <statusattributes type="stringdictionary">
-      <item>
-        <key>Food</key>
-        <value>Food: !</value>
-      </item>
-      <item>
-        <key>Crew</key>
-        <value>Crew: !</value>
-      </item>
-    </statusattributes>
+    <statusattributes type="stringdictionary" />
     <showhealth type="boolean">false</showhealth>
     <attr name="feature_limitinventory" type="boolean">false</attr>
     <Food type="int">0</Food>
     <Crew type="int">7</Crew>
+    <Counter type="int">0</Counter>
     <pov type="object">player</pov>
   </game>
   <object name="Beach">
@@ -30,10 +22,26 @@
     <objectslistprefix type="string"></objectslistprefix>
     <usedefaultprefix />
     <exitslistprefix>To the west is the beach, leading to the cave. To the north is a path through the jungle. To the east is the beach.</exitslistprefix>
+    <enter type="script">
+    </enter>
+    <beforeenter type="script">
+      picture ("first beach.png")
+    </beforeenter>
     <object name="player">
       <inherit name="editor_object" />
       <inherit name="editor_player" />
-      <statusattributes type="stringdictionary" />
+      <statusattributes type="stringdictionary">
+        <item>
+          <key>Food</key>
+          <value>Food: !</value>
+        </item>
+        <item>
+          <key>Crew</key>
+          <value>Crew: !</value>
+        </item>
+      </statusattributes>
+      <Food type="int">0</Food>
+      <Crew type="int">7</Crew>
     </object>
     <exit alias="west" to="Beach_West_1">
       <inherit name="westdirection" />
@@ -47,7 +55,7 @@
   </object>
   <object name="First_Jungle_Path">
     <inherit name="editor_room" />
-    <objectslistprefix type="string"></objectslistprefix>
+    <objectslistprefix>You see </objectslistprefix>
     <descprefix type="string"></descprefix>
     <enter type="script">
     </enter>
@@ -75,9 +83,9 @@
           msg ("You already fought the boar, remember? Those two crew members certainly do.")
         }
         else {
-          game.Food = game.Food + 3
+          player.Food = player.Food + 3
           Boar.Dead = true
-          game.Crew = game.Crew - 2
+          player.Crew = player.Crew - 2
           msg ("You order your crew forward and fight! You slay the beast. Unfortunately, two of your crew are skewered by the boars mighty tusks and perish.")
         }
       </kill>
@@ -95,6 +103,9 @@
     <objectslistprefix type="string"></objectslistprefix>
     <description type="string"></description>
     <exitslistprefix>To the west, you see a series of rocks jutting out at the top of a waterfall. To the east, there is an old rope bridge. You can go</exitslistprefix>
+    <beforeenter type="script">
+      picture ("jungle river.png")
+    </beforeenter>
     <exit alias="South into the jungle" to="First_Jungle_Path">
       <inherit name="southdirection" />
     </exit>
@@ -124,7 +135,7 @@
     <descprefix>You approach the bridge.</descprefix>
     <exitslistprefix>The jungle certainly hasn’t been kind to this old rope bridge, as it is covered in moss and other plants, and several of the planks have begun to rot away.  As you test a plank with your foot, the entire structure creaks and. You can go</exitslistprefix>
     <onexit type="script">
-      game.Crew = game.Crew - 1
+      player.Crew = player.Crew - 1
       msg ("As you carefully tip-toe your way across the bridge, you suddenly hear a crack and a yelp from behind you, turning just in time to see one of your crew members plunging into the river below. The rest of your crew makes it across without issue.")
     </onexit>
     <exit alias="Back to the river bank" to="Jungle_Crossroads_South">
@@ -138,6 +149,8 @@
     <inherit name="editor_room" />
     <descprefix>You continue to cut your way through the jungle.</descprefix>
     <exitslistprefix>To the North, you see the remnants of an old fort. To the South, you can hear the dull roar of a river. You can go</exitslistprefix>
+    <beforeenter type="script">
+    </beforeenter>
     <exit alias="south" to="Shaky_Bridge">
       <inherit name="southdirection" />
     </exit>
@@ -149,6 +162,9 @@
     <inherit name="editor_room" />
     <descprefix>You come to the entryway of an old fort.</descprefix>
     <exitslistprefix>A sturdy wooden door is partially ajar, with vines beginning to grow over the doorway. A dirt path meanders to the east. You can go</exitslistprefix>
+    <beforeenter type="script">
+      picture ("fort door.png")
+    </beforeenter>
     <exit alias="south" to="Rocks_South">
       <inherit name="southdirection" />
     </exit>
@@ -163,11 +179,14 @@
     <inherit name="editor_room" />
     <descprefix>You enter into the ground floor of the fort.</descprefix>
     <exitslistprefix>There’s not much left in here, save a few scattered remains of chairs and tables that plant life has thoroughly overtaken. You see two sets of stairs on the north wall, one going down and the other going up. You can go</exitslistprefix>
-    <exit alias="down" to="Fort_Entrance">
+    <exit alias="exit fort" to="Fort_Entrance">
       <inherit name="southdirection" />
     </exit>
     <exit alias="up" to="Fort_2nd_Floor">
       <inherit name="northdirection" />
+    </exit>
+    <exit alias="down" to="Small_Library">
+      <inherit name="downdirection" />
     </exit>
   </object>
   <object name="Fort_2nd_Floor">
@@ -197,6 +216,8 @@
     <inherit name="editor_room" />
     <descprefix>You are on the beach.</descprefix>
     <exitslistprefix>To the west is where your boat landed. To the east is more beach.s You can go</exitslistprefix>
+    <beforeenter type="script">
+    </beforeenter>
     <exit alias="east" to="Beach_East_2">
       <inherit name="eastdirection" />
     </exit>
@@ -208,6 +229,8 @@
     <inherit name="editor_room" />
     <descprefix>You are on the beach.</descprefix>
     <exitslistprefix>To the west is more beach, leading to your boat. To the east is more beach. There is a coconut tree here. You can go</exitslistprefix>
+    <beforeenter type="script">
+    </beforeenter>
     <exit alias="east" to="Beach_East_3">
       <inherit name="eastdirection" />
     </exit>
@@ -219,6 +242,8 @@
     <inherit name="editor_room" />
     <descprefix>You are on the beach.</descprefix>
     <exitslistprefix>You are on the beach. To the north is more beach. To the west is more beach, leading to your boat. You can go</exitslistprefix>
+    <beforeenter type="script">
+    </beforeenter>
     <exit alias="north" to="Beach_East_4">
       <inherit name="northdirection" />
     </exit>
@@ -230,6 +255,8 @@
     <inherit name="editor_room" />
     <descprefix>You are on the beach.</descprefix>
     <exitslistprefix>That pile of rocks reminds you of your first love! To the north is more beach, to the south is more beach, leading to your boat. You can go</exitslistprefix>
+    <beforeenter type="script">
+    </beforeenter>
     <exit alias="north" to="Beach_East_5">
       <inherit name="northdirection" />
     </exit>
@@ -241,6 +268,9 @@
     <inherit name="editor_room" />
     <descprefix>You are at the cave entrance</descprefix>
     <exitslistprefix>To the north is the cave. To the east is the beach, leading to your boat. You can go</exitslistprefix>
+    <beforeenter type="script">
+      picture ("cave.png")
+    </beforeenter>
     <exit alias="east" to="Beach_West_4">
       <inherit name="eastdirection" />
     </exit>
@@ -284,6 +314,7 @@
   <object name="Tomb">
     <inherit name="editor_room" />
     <Pillaged type="boolean">false</Pillaged>
+    <descprefix>You enter what appears to be a</descprefix>
     <enter type="script">
       if (Tomb.Pillaged = False) {
         msg ("Dozens of skeletons rest in indentations on the walls, still bedecked in their armor and weapons.  An old wooden chest sits in on a stone slab table in the center of the room. The hair on the back of your neck stands up and you get the distinct impression you are being watched.")
@@ -292,7 +323,6 @@
         msg ("Skeletal remains litter the ground, as well as the corpses of your crew. The stone slab table is empty.")
       }
     </enter>
-    <descprefix>You enter what appears to be a</descprefix>
     <exit alias="east" to="West_Cave_Path">
       <inherit name="eastdirection" />
     </exit>
@@ -343,11 +373,32 @@
     <exit alias="east" to="Small_Library">
       <inherit name="eastdirection" />
     </exit>
+    <object name="Food_Cache">
+      <inherit name="editor_object" />
+      <unlock type="scriptdictionary">
+        <item key="key">
+          if (Food_Cache.Full = true) {
+            player.Food = player.Food + 5
+            msg ("The lock opens and you retrieve a bunch of dried meats, hard tack, and rum! They still look… good enough to eat.")
+          }
+          else {
+            msg ("The food cache is empty.")
+          }
+        </item>
+      </unlock>
+      <Full />
+      <look>You spy a bunch of crates and bottles!</look>
+      <displayverbs type="stringlist">
+        <value>Look at</value>
+      </displayverbs>
+    </object>
   </object>
   <object name="Beach_East_8">
     <inherit name="editor_room" />
     <descprefix>You are on the beach.</descprefix>
     <exitslistprefix>To the west is a dirt path that leads to the fort. To the east is more beach, leading to your boat. This path looks particularly long though. You can go</exitslistprefix>
+    <beforeenter type="script">
+    </beforeenter>
     <exit alias="west" to="Fort_Entrance">
       <inherit name="westdirection" />
     </exit>
@@ -359,6 +410,8 @@
     <inherit name="editor_room" />
     <descprefix>You are on the beach.</descprefix>
     <exitslistprefix>To the west is more beach. To the east is more beach, leading to your boat. You can go</exitslistprefix>
+    <beforeenter type="script">
+    </beforeenter>
     <exit alias="west" to="Beach_East_8">
       <inherit name="westdirection" />
     </exit>
@@ -370,18 +423,36 @@
     <inherit name="editor_room" />
     <descprefix>You are on the beach.</descprefix>
     <exitslistprefix>To the west is more beach. To the south is more beach, leading to your boat. You can go</exitslistprefix>
+    <beforeenter type="script">
+    </beforeenter>
     <exit alias="west" to="Beach_East_7">
       <inherit name="westdirection" />
     </exit>
     <exit alias="south" to="Beach_East_5">
       <inherit name="southdirection" />
     </exit>
+    <object name="Coconut_Tree_1">
+      <inherit name="editor_object" />
+      <Full />
+      <shake type="script">
+        if (Coconut_Tree_1.Full = true) {
+          msg ("You and your crew shake vigorously. The coconut falls… and strikes one of your crew in the back of the head! You lose one crew but gain one deadly coconut.")
+          player.Crew = player.Crew - 1
+          player.Food = player.Food + 1
+        }
+        else {
+          msg ("The coconut tree is empty.")
+        }
+      </shake>
+    </object>
   </object>
   <object name="Beach_East_5">
     <inherit name="editor_room" />
     <isroom type="boolean">false</isroom>
     <descprefix>You are on the beach.</descprefix>
     <exitslistprefix>To the north is more beach. To the south is more beach, leading to your boat. You can go</exitslistprefix>
+    <beforeenter type="script">
+    </beforeenter>
     <exit alias="north" to="Beach_East_6">
       <inherit name="northdirection" />
     </exit>
@@ -393,6 +464,8 @@
     <inherit name="editor_room" />
     <descprefix>You are on the beach.</descprefix>
     <exitslistprefix>To the west is the beach, leading to the cave. To the east is the beach where your boat is.You can go</exitslistprefix>
+    <beforeenter type="script">
+    </beforeenter>
     <exit alias="east" to="Beach">
       <inherit name="eastdirection" />
     </exit>
@@ -404,17 +477,34 @@
     <inherit name="editor_room" />
     <descprefix>You are on the beach.</descprefix>
     <exitslistprefix>These rocks remind you of your favorite horse! To the west is more beach, leading to the cave. To the east is more beach, leading to your boat. You can go</exitslistprefix>
+    <beforeenter type="script">
+    </beforeenter>
     <exit alias="east" to="Beach_West_1">
       <inherit name="eastdirection" />
     </exit>
     <exit alias="west" to="Beach_West_3">
       <inherit name="westdirection" />
     </exit>
+    <object name="Coconut_Tree_2">
+      <inherit name="editor_object" />
+      <Full />
+      <shake type="script">
+        if (Coconut_Tree_2.Full = true) {
+          msg ("You and your crew shake vigorously. The coconut falls! You gain one juicy coconut.")
+          player.Crew = player.Food + 1
+        }
+        else {
+          msg ("The coconut tree is empty.")
+        }
+      </shake>
+    </object>
   </object>
   <object name="Beach_West_3">
     <inherit name="editor_room" />
     <descprefix>You are on the beach.</descprefix>
     <exitslistprefix>To the west is more beach, leading to the cave. To the east is more beach, leading to your boat. You can go</exitslistprefix>
+    <beforeenter type="script">
+    </beforeenter>
     <exit alias="east" to="Beach_West_2">
       <inherit name="eastdirection" />
     </exit>
@@ -427,7 +517,7 @@
       <inspect type="script">
         if (Tidal_Pool.Is_Full = true) {
           msg ("You discover a tidal pool! It has crabs to eat.")
-          game.Food = game.Food + 1
+          player.Food = player.Food + 1
           Tidal_Pool.Is_Full = false
         }
         else {
@@ -440,6 +530,8 @@
     <inherit name="editor_room" />
     <descprefix>You are on the beach.</descprefix>
     <exitslistprefix>To the west is the entrance to a cave. To the east is more beach, leading to your boat. You can go</exitslistprefix>
+    <beforeenter type="script">
+    </beforeenter>
     <exit alias="east" to="Beach_West_3">
       <inherit name="eastdirection" />
     </exit>
@@ -464,6 +556,7 @@
   </verb>
   <object name="Stone_Slab">
     <inherit name="editor_room" />
+    <Pillaged type="boolean">false</Pillaged>
     <beforeenter type="script">
       if (Stone_Slab.Pillaged = False) {
         msg ("You approach the stone table.  A variety of canopic jars sit around an ornately decorated wooden chest. The feeling that you’re being watched intensifies.")
@@ -472,7 +565,6 @@
         msg ("You approach the stone table. The canopic jars were knocked off the table during the struggle, and you took the wooden chest with you. Nothing more to see here.")
       }
     </beforeenter>
-    <Pillaged type="boolean">false</Pillaged>
     <object name="Chest">
       <inherit name="editor_object" />
       <scenery type="boolean">false</scenery>
@@ -480,7 +572,7 @@
       <openthechest type="script">
         if (Chest.Opened = False) {
           msg ("You open the chest and find it filled with gold and precious gems! However, your excitement is tempered as you watch the eyes of each skeleton light up with a blue-green glow as they turn to face you.  One by one, the skeletons pull themselves out of their crypts and attack! After a scuffle, you and your crew are able to slay the last skeleton and abscond with the treasure, but not without suffering heavy losses yourselves.")
-          game.Crew = game.Crew - 3
+          player.Crew = player.Crew - 3
         }
         else {
           msg ("The chest is already looted")
@@ -494,5 +586,59 @@
     <exit alias="west" to="Cellar">
       <inherit name="westdirection" />
     </exit>
+    <exit alias="up" to="Fort_1st_Floor">
+      <inherit name="updirection" />
+    </exit>
   </object>
+  <verb>
+    <property>shake</property>
+    <pattern>shake</pattern>
+    <defaultexpression>"You can't shake " + object.article + "."</defaultexpression>
+  </verb>
+  <turnscript name="Endings">
+    <enabled />
+    <script><![CDATA[
+      if (player.Crew = 0) {
+        finish
+        msg ("All of your crew has perished, and with them any chance of getting off of the island.  But hey, at least there’s plenty of food.")
+        picture ("good ending.png")
+      }
+      else if (player.Food >= player.Crew + 1 and game.Counter > 1440) {
+        finish
+        msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>You spend over a week at sea, and while the damaged hull does worsen as you progress, you manage to get just within sight of port before the ship starts to sink.  You and your remaining crew swim ashore, soggy but otherwise unharmed, and watch the mast slowly slip beneath the waves.<br/>YOU MADE IT!<br/>")
+        picture ("good ending.png")
+      }
+      else if (player.Food >= player.Crew and game.Counter < 1440) {
+        finish
+        msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>You spend over a week at sea, and while the damaged hull does worsen as you progress, you manage to get into port and get it patched before it causes the ship to sink.  After a stressful week, you and your remaining crew celebrate your good fortune at the pub.<br/>YOU MADE IT!<br/>")
+        picture ("good ending.png")
+      }
+      else if (player.Food <= player.Crew/2  and game.Counter > 1440) {
+        finish
+        msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>As the days at sea wear on, it becomes painfully obvious the food you gathered will not be enough to get you and your crew to port.  After the events on the island, the crew blame you and your poor leadership for the predicament, and you find yourself facing a mutiny.  Your former crew tie you up and force you off of the gangplank, and you lose consciousness as you slowly sink to the bottom of the sea. If it’s any consolation, your crew will starve before getting to port anyway.<br/>YOU DIED<br/>")
+        picture ("bad ending.png")
+      }
+      else if (player.Food >= player.Crew/2  and game.Counter > 1440) {
+        msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>As the days at sea wear on, it becomes painfully obvious the food you gathered will not be enough to get you and your crew to port.  Because of your leadership decisions on the island, the crew squabbles over who’s to blame and a group of them try to mutiny.  You and your loyal crew members manage to quash the mutiny, but there’s so little food left that even with your crew numbers so depleted you won’t be able to last to port.  You and your remaining crew starve in the open ocean.<br/>YOU DIED<br/>")
+        picture ("bad ending.png")
+      }
+      else if (player.Crew/2 < player.Food and player.Food < player.Crew  and game.Counter < 1440) {
+        finish
+        msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>You spend over a week at sea, and while food stores threatening to run out midway prompts an attempted mutiny, you and your loyal crew members cut down the rebelling crew.  The resulting thinning of the herd lets you spread your rations just enough to get into port and get it your hull patched before it causes the ship to sink.  After a stressful week, you and your remaining crew celebrate your relatively good fortune at the pub.<br/>YOU MADE IT!<br/>")
+        picture ("good ending.png")
+      }
+      else if (player.Crew/2 < player.Food and player.Food < player.Crew  and game.Counter > 1440) {
+        finish
+        msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>As the days at sea wear on, it becomes painfully obvious the food you gathered will not be enough to get you and your crew to port.  After the events on the island, the crew blame you and your poor leadership for the predicament, and you find yourself facing a mutiny.  Your former crew tie you up and force you off of the gangplank, and you lose consciousness as you slowly sink to the bottom of the sea. <br/>YOU DIED<br/>")
+        picture ("bad ending.png")
+      }
+    ]]></script>
+  </turnscript>
+  <timer name="Timer">
+    <interval>1</interval>
+    <enabled />
+    <script>
+      game.Counter = game.Counter + 1
+    </script>
+  </timer>
 </asl>
