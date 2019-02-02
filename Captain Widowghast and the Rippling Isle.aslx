@@ -60,43 +60,43 @@
       <inherit name="editor_object" />
       <usedefaultprefix type="boolean">false</usedefaultprefix>
       <alias>Leave?</alias>
+      <displayverbs type="stringlist" />
       <leavetheisland type="script"><![CDATA[
         if (player.Crew = 0) {
           finish
           msg ("All of your crew has perished, and with them any chance of getting off of the island.  But hey, at least there’s plenty of food.")
           picture ("good ending.png")
         }
-        else if (player.Food >= player.Crew + 1 and game.Counter > 1440) {
+        else if (player.Food >= player.Crew + 1) {
           finish
           msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>You spend over a week at sea, and while the damaged hull does worsen as you progress, you manage to get just within sight of port before the ship starts to sink.  You and your remaining crew swim ashore, soggy but otherwise unharmed, and watch the mast slowly slip beneath the waves.<br/>YOU MADE IT!<br/>")
           picture ("good ending.png")
         }
-        else if (player.Food >= player.Crew and game.Counter < 1440) {
+        else if (player.Food >= player.Crew) {
           finish
           msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>You spend over a week at sea, and while the damaged hull does worsen as you progress, you manage to get into port and get it patched before it causes the ship to sink.  After a stressful week, you and your remaining crew celebrate your good fortune at the pub.<br/>YOU MADE IT!<br/>")
           picture ("good ending.png")
         }
-        else if (player.Food <= player.Crew/2  and game.Counter > 1440) {
+        else if (player.Food <= player.Crew/2) {
           finish
           msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>As the days at sea wear on, it becomes painfully obvious the food you gathered will not be enough to get you and your crew to port.  After the events on the island, the crew blame you and your poor leadership for the predicament, and you find yourself facing a mutiny.  Your former crew tie you up and force you off of the gangplank, and you lose consciousness as you slowly sink to the bottom of the sea. If it’s any consolation, your crew will starve before getting to port anyway.<br/>YOU DIED<br/>")
           picture ("bad ending.png")
         }
-        else if (player.Food >= player.Crew/2  and game.Counter > 1440) {
+        else if (player.Food >= player.Crew/2) {
           msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>As the days at sea wear on, it becomes painfully obvious the food you gathered will not be enough to get you and your crew to port.  Because of your leadership decisions on the island, the crew squabbles over who’s to blame and a group of them try to mutiny.  You and your loyal crew members manage to quash the mutiny, but there’s so little food left that even with your crew numbers so depleted you won’t be able to last to port.  You and your remaining crew starve in the open ocean.<br/>YOU DIED<br/>")
           picture ("bad ending.png")
         }
-        else if (player.Crew/2 < player.Food and player.Food < player.Crew  and game.Counter > 1440 and game.Counter < 2880) {
+        else if (player.Crew/2 < player.Food and player.Food < player.Crew) {
           finish
           msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>You spend over a week at sea, and while food stores threatening to run out midway prompts an attempted mutiny, you and your loyal crew members cut down the rebelling crew.  The resulting thinning of the herd lets you spread your rations just enough to get into port and get it your hull patched before it causes the ship to sink.  After a stressful week, you and your remaining crew celebrate your relatively good fortune at the pub.<br/>YOU MADE IT!<br/>")
           picture ("good ending.png")
         }
-        else if (player.Crew/2 < player.Food and player.Food < player.Crew  and game.Counter > 2880) {
+        else if (player.Crew/2 < player.Food and player.Food < player.Crew) {
           finish
           msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>As the days at sea wear on, it becomes painfully obvious the food you gathered will not be enough to get you and your crew to port.  After the events on the island, the crew blame you and your poor leadership for the predicament, and you find yourself facing a mutiny.  Your former crew tie you up and force you off of the gangplank, and you lose consciousness as you slowly sink to the bottom of the sea. <br/>YOU DIED<br/>")
           picture ("bad ending.png")
         }
       ]]></leavetheisland>
-      <displayverbs type="stringlist" />
     </object>
   </object>
   <object name="First_Jungle_Path">
@@ -256,9 +256,6 @@
     <exit alias="up" to="Fort_2nd_Floor">
       <inherit name="northdirection" />
     </exit>
-    <exit alias="down" to="Small_Library">
-      <inherit name="downdirection" />
-    </exit>
   </object>
   <object name="Fort_2nd_Floor">
     <inherit name="editor_room" />
@@ -286,8 +283,8 @@
   </object>
   <object name="Beach_East_1">
     <inherit name="editor_room" />
-    <descprefix>You are on the beach.</descprefix>
-    <exitslistprefix>To the west is where your boat landed. To the east is more beach.s You can go</exitslistprefix>
+    <descprefix>You are on the beach</descprefix>
+    <exitslistprefix>To the west is where your boat landed. To the east is more beach. You can go</exitslistprefix>
     <alias>  </alias>
     <usedefaultprefix type="boolean">false</usedefaultprefix>
     <beforeenter type="script">
@@ -301,7 +298,7 @@
   </object>
   <object name="Beach_East_2">
     <inherit name="editor_room" />
-    <descprefix>You are on the beach.</descprefix>
+    <descprefix>You  are on the beach.</descprefix>
     <exitslistprefix>To the west is more beach, leading to your boat. To the east is more beach. There is a coconut tree here. You can go</exitslistprefix>
     <usedefaultprefix type="boolean">false</usedefaultprefix>
     <alias>  </alias>
@@ -313,11 +310,30 @@
     <exit alias="west" to="Beach_East_1">
       <inherit name="westdirection" />
     </exit>
+    <object name="Coconut_Tree_2">
+      <inherit name="editor_object" />
+      <Full />
+      <displayverbs type="stringlist" />
+      <alias>coconut tree</alias>
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <prefix>There is a</prefix>
+      <suffix>here.</suffix>
+      <shake type="script">
+        if (Coconut_Tree_2.Full = true) {
+          msg ("You and your crew shake vigorously. The coconut falls! You gain one juicy coconut.")
+          player.Food = player.Food + 1
+          Full = false
+        }
+        else {
+          msg ("The coconut tree is empty.")
+        }
+      </shake>
+    </object>
   </object>
   <object name="Beach_East_3">
     <inherit name="editor_room" />
     <descprefix>You are on the beach.</descprefix>
-    <exitslistprefix>You are on the beach. To the north is more beach. To the west is more beach, leading to your boat. You can go</exitslistprefix>
+    <exitslistprefix>To the north is more beach. To the west is more beach, leading to your boat. You can go</exitslistprefix>
     <alias>  </alias>
     <usedefaultprefix type="boolean">false</usedefaultprefix>
     <beforeenter type="script">
@@ -422,7 +438,7 @@
   <object name="East_Cave_1">
     <inherit name="editor_room" />
     <exitslistprefix>To the west is more cave. To the east is more cave. You can go</exitslistprefix>
-    <descprefix>You are in a cave</descprefix>
+    <descprefix>You are in a cave. To the west is more cave. To the east is more cave. </descprefix>
     <alias>  </alias>
     <usedefaultprefix type="boolean">false</usedefaultprefix>
     <exit alias="west" to="Middle_of_the_cave">
@@ -434,7 +450,7 @@
   </object>
   <object name="East_Cave_2">
     <inherit name="editor_room" />
-    <descprefix>You are in a cave</descprefix>
+    <descprefix>You are in a cave. To the west is more cave. To the east is a smooth wall with a seam around the edges.</descprefix>
     <exitslistprefix>To the west is more cave. To the east is a smooth wall with a seam around the edges. You can go</exitslistprefix>
     <usedefaultprefix type="boolean">false</usedefaultprefix>
     <alias>  </alias>
@@ -447,34 +463,35 @@
   </object>
   <object name="East_Cave_3">
     <inherit name="editor_room" />
-    <descprefix>You are in a cave</descprefix>
+    <descprefix>You are in a cave. There is a seam around the eastern wall. It looks as if there is a button next to it. To the west is more cave.</descprefix>
     <usedefaultprefix type="boolean">false</usedefaultprefix>
     <alias>  </alias>
     <exit alias="west" to="East_Cave_2">
       <inherit name="westdirection" />
     </exit>
-    <exit alias="push button" to="Bookcase_Room" />
+    <exit alias="push button" to="Bookcase_Room">
+      <message>The eastern wall slides! You walk through and the wall slides behind you.</message>
+    </exit>
   </object>
   <object name="Bookcase_Room">
     <inherit name="editor_room" />
     <usedefaultprefix type="boolean">false</usedefaultprefix>
     <alias>  </alias>
-    <descprefix>You are in a Bookcase Room</descprefix>
+    <descprefix>You are in a small basement library. The western bookcase has a shiny metallic book that instills in you an irresistible urge to pull it. To the east is a basement cellar.</descprefix>
     <exit alias="east" to="Cellar">
       <inherit name="eastdirection" />
     </exit>
-    <exit alias="pull book" to="East_Cave_3" />
+    <exit alias="pull book" to="East_Cave_3">
+      <message>The bookcase slides, revealing a cave! You walk through and the bookcase slides behind you.</message>
+    </exit>
   </object>
   <object name="Cellar">
     <inherit name="editor_room" />
     <usedefaultprefix type="boolean">false</usedefaultprefix>
     <alias>  </alias>
-    <descprefix>You are in a cellar</descprefix>
+    <descprefix>You are in the cellar. You spy a bunch of crates and bottles! They’re locked away behind iron bars. You try the lock, but it won’t budge. To the west is a small library. To the east are stairs that lead upwards.</descprefix>
     <exit alias="west" to="Bookcase_Room">
       <inherit name="westdirection" />
-    </exit>
-    <exit alias="east" to="Small_Library">
-      <inherit name="eastdirection" />
     </exit>
     <object name="Food_Cache">
       <inherit name="editor_object" />
@@ -599,21 +616,6 @@
     <exit alias="west" to="Beach_West_3">
       <inherit name="westdirection" />
     </exit>
-    <object name="Coconut_Tree_2">
-      <inherit name="editor_object" />
-      <Full />
-      <displayverbs type="stringlist" />
-      <shake type="script">
-        if (Coconut_Tree_2.Full = true) {
-          msg ("You and your crew shake vigorously. The coconut falls! You gain one juicy coconut.")
-          player.Food = player.Food + 1
-          Full = false
-        }
-        else {
-          msg ("The coconut tree is empty.")
-        }
-      </shake>
-    </object>
   </object>
   <object name="Beach_West_3">
     <inherit name="editor_room" />
@@ -706,20 +708,6 @@
       </openthechest>
     </object>
     <exit alias="back to the tomb" to="Tomb" />
-  </object>
-  <object name="Small_Library">
-    <inherit name="editor_room" />
-    <usedefaultprefix type="boolean">false</usedefaultprefix>
-    <alias>                 </alias>
-    <prefix>               </prefix>
-    <suffix>              </suffix>
-    <descprefix>You are in a small library</descprefix>
-    <exit alias="west" to="Cellar">
-      <inherit name="westdirection" />
-    </exit>
-    <exit alias="up" to="Fort_1st_Floor">
-      <inherit name="updirection" />
-    </exit>
   </object>
   <verb>
     <property>shake</property>
