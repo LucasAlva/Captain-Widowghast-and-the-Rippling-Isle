@@ -21,16 +21,22 @@
   <object name="Beach">
     <inherit name="editor_room" />
     <isroom />
-    <description><![CDATA[You are Captain Widowghast, fierce leader of your very own band of pirates! You and your adventuring crew are facing a bit of a conundrum: a recent run-in with the business end of some cannons has crippled your ship, the Mist Eater, with a slow leak in its hull that might soon see you all underwater. To make matters worse, the attack damaged your food stores, leaving them with not nearly enough rations for the week-long journey to the nearest port. The only saving grace of this whole debacle is that your course has brought you close to the only landmass in this section of the ocean: the Rippling Isle. It’s your hope that the Mist Eater might be able to replenish its stores by foraging through the untamed jungles of the island, the ruins of past settlement attempts, and the mysterious caves dotting the landscape. Time is limited before the hull leak will make a return impossible, however; the crew’s carpenter estimates that any more than 24 to 48 hours (24 to 48 minutes real time) on the island might be pushing your luck. With this in mind, you will lead an expedition throughout the island, budgeting a maximum of two days to find enough food to make it back to port. <br/><br/>You are on the beach at the southernmost tip of the island.]]></description>
-    <descprefix type="string"></descprefix>
+    <description type="string"></description>
+    <descprefix>You are on the beach at</descprefix>
     <objectslistprefix type="string"></objectslistprefix>
     <usedefaultprefix type="boolean">false</usedefaultprefix>
-    <exitslistprefix>To the west is the beach, leading to the cave. To the north is a path through the jungle. To the east is the beach.</exitslistprefix>
+    <exitslistprefix>To the west is the beach, leading to the cave. To the north is a path through the jungle. To the east is the beach. You can go</exitslistprefix>
     <enter type="script">
     </enter>
     <beforeenter type="script">
       picture ("first beach.png")
     </beforeenter>
+    <beforefirstenter type="script">
+      msg ("You are Captain Widowghast, fierce leader of your very own band of pirates! You and your adventuring crew are facing a bit of a conundrum: a recent run-in with the business end of some cannons has crippled your ship, the Mist Eater, with a slow leak in its hull that might soon see you all underwater. To make matters worse, the attack damaged your food stores, leaving them with not nearly enough rations for the week-long journey to the nearest port. The only saving grace of this whole debacle is that your course has brought you close to the only landmass in this section of the ocean: the Rippling Isle. It’s your hope that the Mist Eater might be able to replenish its stores by foraging through the untamed jungles of the island, the ruins of past settlement attempts, and the mysterious caves dotting the landscape. Time is limited before the hull leak will make a return impossible, however; the crew’s carpenter estimates that any more than 24 to 48 hours (24 to 48 minutes real time) on the island might be pushing your luck. With this in mind, you will lead an expedition throughout the island, budgeting a maximum of two days to find enough food to make it back to port. ")
+    </beforefirstenter>
+    <firstenter type="script">
+    </firstenter>
+    <alias> the southernmost tip of the island</alias>
     <object name="player">
       <inherit name="editor_object" />
       <inherit name="editor_player" />
@@ -59,13 +65,13 @@
     <object name="Leave">
       <inherit name="editor_object" />
       <usedefaultprefix type="boolean">false</usedefaultprefix>
-      <alias>Leave?</alias>
+      <alias>You can leave any time on the boat, but be mindful of your crew and provisions</alias>
       <displayverbs type="stringlist" />
       <leavetheisland type="script"><![CDATA[
         if (player.Crew = 0) {
           finish
           msg ("All of your crew has perished, and with them any chance of getting off of the island.  But hey, at least there’s plenty of food.")
-          picture ("good ending.png")
+          picture ("bad ending.png")
         }
         else if (player.Food >= player.Crew + 1 and game.Counter > 1440) {
           finish
@@ -113,16 +119,16 @@
     </enter>
     <beforeenter type="script">
       if (Boar.Dead = false) {
-        msg ("You enter a clearing in the jungle with a wild boar peacefully grazing. It looks like it could be carved up to yield lots of meat, though its tusks and hooves look deadly. Almost as if it can tell what you’re thinking, it grunts and kicks its back legs. You could try to kill it or run by.")
+        msg ("You enter a clearing in the jungle with a wild boar peacefully grazing. It looks like it could be carved up to yield lots of meat, though its tusks and hooves look deadly. Almost as if it can tell what you’re thinking, it grunts and kicks its back legs. Perhaps you and your crew could Kill the Boar?")
       }
       else {
         msg ("You enter a clearing in the jungle torn up by your previous fight. The remains of two of your crew mates lie bloody on the ground.")
       }
     </beforeenter>
+    <exitslistprefix>You can go</exitslistprefix>
     <object name="Boar">
       <inherit name="editor_object" />
       <displayverbs type="stringlist">
-        <value>Avoid</value>
         <value>Kill</value>
       </displayverbs>
       <attr name="feature_startscript" type="boolean">false</attr>
@@ -143,6 +149,9 @@
           msg ("You order your crew forward and fight! You slay the beast. Unfortunately, two of your crew are skewered by the boars mighty tusks and perish.")
         }
       </kill>
+      <prefix>Perhaps we can kill</prefix>
+      <alias>the Boar</alias>
+      <suffix>for some good eatings. It's just a big pig right?</suffix>
     </object>
     <exit alias="south" to="Beach">
       <inherit name="southdirection" />
@@ -212,7 +221,7 @@
   <object name="Jungle_Pre_Fort">
     <inherit name="editor_room" />
     <descprefix>You continue to cut your way through the jungle.</descprefix>
-    <exitslistprefix>To the North, you see the remnants of an old fort. To the South, you can hear the dull roar of a river. You can go</exitslistprefix>
+    <exitslistprefix>To the North, you see the remnants of an old fort. To the south you can hear the dull roar of a river. To the southwest, you see a series of rocks jutting out at the top of a waterfall. To the southeast, there is an old rope bridge. You can go</exitslistprefix>
     <usedefaultprefix type="boolean">false</usedefaultprefix>
     <alias>  </alias>
     <beforeenter type="script">
@@ -220,10 +229,10 @@
     <exit alias="north to the fort" to="Fort_Entrance">
       <inherit name="northdirection" />
     </exit>
-    <exit alias="east" to="Shaky_Bridge_North">
+    <exit alias="to the bridge by the river" to="Shaky_Bridge_North">
       <inherit name="eastdirection" />
     </exit>
-    <exit alias="west" to="Rocks North">
+    <exit alias="to the rocks by the river" to="Rocks North">
       <inherit name="westdirection" />
     </exit>
   </object>
@@ -257,6 +266,9 @@
     </exit>
     <exit alias="up" to="Fort_2nd_Floor">
       <inherit name="northdirection" />
+    </exit>
+    <exit alias="down" to="Bookcase_Room">
+      <inherit name="downdirection" />
     </exit>
   </object>
   <object name="Fort_2nd_Floor">
@@ -316,7 +328,7 @@
       <inherit name="editor_object" />
       <Full />
       <displayverbs type="stringlist" />
-      <alias>coconut tree</alias>
+      <alias>Coconut Tree</alias>
       <usedefaultprefix type="boolean">false</usedefaultprefix>
       <prefix>There is a</prefix>
       <suffix>here.</suffix>
@@ -324,7 +336,7 @@
         if (Coconut_Tree_2.Full = true) {
           msg ("You and your crew shake vigorously. The coconut falls! You gain one juicy coconut.")
           player.Food = player.Food + 1
-          Full = false
+          Coconut_Tree_2.Full = false
         }
         else {
           msg ("The coconut tree is empty.")
@@ -479,12 +491,15 @@
     <inherit name="editor_room" />
     <usedefaultprefix type="boolean">false</usedefaultprefix>
     <alias>  </alias>
-    <descprefix>You are in a small basement library. The western bookcase has a shiny metallic book that instills in you an irresistible urge to pull it. To the east is a basement cellar.</descprefix>
+    <descprefix>You are in a small basement library. The western bookcase has a shiny metallic book that instills in you an irresistible urge to pull it. To the east is a basement cellar. A staircase appears to lead up to the fort.</descprefix>
     <exit alias="east" to="Cellar">
       <inherit name="eastdirection" />
     </exit>
     <exit alias="pull book" to="East_Cave_3">
       <message>The bookcase slides, revealing a cave! You walk through and the bookcase slides behind you.</message>
+    </exit>
+    <exit alias="up" to="Fort_1st_Floor">
+      <inherit name="updirection" />
     </exit>
   </object>
   <object name="Cellar">
@@ -502,15 +517,17 @@
       <displayverbs type="stringlist" />
       <unlock type="scriptdictionary">
         <item key="key">
-          if (Food_Cache.Full = true) {
+          if (Food_Cache.Full = True) {
             player.Food = player.Food + 5
             msg ("The lock opens and you retrieve a bunch of dried meats, hard tack, and rum! They still look… good enough to eat.")
+            Food_Cache.Full = False
           }
           else {
             msg ("The food cache is empty.")
           }
         </item>
       </unlock>
+      <alias>Food Cache</alias>
     </object>
   </object>
   <object name="Beach_East_8">
@@ -562,15 +579,17 @@
       <Full />
       <displayverbs type="stringlist" />
       <shake type="script">
-        if (Coconut_Tree_1.Full = true) {
+        if (Coconut_Tree_1.Full = True) {
           msg ("You and your crew shake vigorously. The coconut falls… and strikes one of your crew in the back of the head! You lose one crew but gain one deadly coconut.")
           player.Crew = player.Crew - 1
           player.Food = player.Food + 1
+          Coconut_Tree_1.Full = False
         }
         else {
           msg ("The coconut tree is empty.")
         }
       </shake>
+      <alias>Coconut Tree</alias>
     </object>
   </object>
   <object name="Beach_East_5">
@@ -592,7 +611,7 @@
   <object name="Beach_West_1">
     <inherit name="editor_room" />
     <descprefix>You are on the beach.</descprefix>
-    <exitslistprefix>To the west is the beach, leading to the cave. To the east is the beach where your boat is.You can go</exitslistprefix>
+    <exitslistprefix>To the west is the beach, leading to the cave. To the east is the beach where your boat is. You can go</exitslistprefix>
     <usedefaultprefix type="boolean">false</usedefaultprefix>
     <alias>  </alias>
     <beforeenter type="script">
@@ -647,6 +666,7 @@
           msg ("The tidal pool is empty")
         }
       </inspect>
+      <alias>Tidal Pool</alias>
     </object>
   </object>
   <object name="Beach_West_4">
@@ -721,10 +741,11 @@
     <exitslistprefix>To the west is a path. To the south is a bridge. The jungle certainly hasn’t been kind to this old rope bridge, as it is covered in moss and other plants, and several of the planks have begun to rot away.  As you test a plank with your foot, the entire structure creaks. You can go</exitslistprefix>
     <usedefaultprefix type="boolean">false</usedefaultprefix>
     <descprefix>You are on a jungle path</descprefix>
-    <exit alias="west" to="Jungle_Pre_Fort">
+    <alias>  </alias>
+    <exit alias="west to the fort" to="Jungle_Pre_Fort">
       <inherit name="westdirection" />
     </exit>
-    <exit alias="south" to="Shaky_Bridge_South">
+    <exit alias="south across the river" to="Shaky_Bridge_South">
       <inherit name="southdirection" />
       <runscript />
       <script type="script">
@@ -740,10 +761,11 @@
     <descprefix type="string"></descprefix>
     <exitslistprefix>Spray from the river hitting the rocks mists your face, and while the rocks also appear slick, it seems like they might be big enough to still be safe. You can go</exitslistprefix>
     <description>You are just north of the rocks. To the east is a jungle path.</description>
-    <exit alias="south" to="Rocks_South">
+    <alias>  </alias>
+    <exit alias="south across the river" to="Rocks_South">
       <inherit name="southdirection" />
     </exit>
-    <exit alias="east" to="Jungle_Pre_Fort">
+    <exit alias="east to the fort" to="Jungle_Pre_Fort">
       <inherit name="eastdirection" />
     </exit>
   </object>
@@ -757,6 +779,15 @@
     <pattern>leave the island</pattern>
     <defaultexpression>"You can't leave the island " + object.article + "."</defaultexpression>
   </verb>
+  <turnscript>
+    <script><![CDATA[
+      if (player.Crew <= 0) {
+        finish
+        msg ("All of your crew has perished, and with them any chance of getting off of the island.  But hey, at least there’s plenty of food.")
+        picture ("bad ending.png")
+      }
+    ]]></script>
+  </turnscript>
   <timer name="Timer">
     <interval>1</interval>
     <enabled />
