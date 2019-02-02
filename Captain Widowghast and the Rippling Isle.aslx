@@ -363,6 +363,9 @@
       <prefix>A skeleton propped up against the wall holds a</prefix>
       <suffix>. </suffix>
       <takemsg>The Map seems to depict the path of the cave, with a fork in the road not far inward.  The western path is marked with a red x.</takemsg>
+      <displayverbs type="stringlist">
+        <value>Take</value>
+      </displayverbs>
     </object>
     <exit alias="into the cave" to="Middle_of_the_cave">
       <inherit name="northdirection" />
@@ -477,9 +480,7 @@
       <inherit name="editor_object" />
       <Full />
       <look>You spy a bunch of crates and bottles!</look>
-      <displayverbs type="stringlist">
-        <value>Look at</value>
-      </displayverbs>
+      <displayverbs type="stringlist" />
       <unlock type="scriptdictionary">
         <item key="key">
           if (Food_Cache.Full = true) {
@@ -540,9 +541,7 @@
     <object name="Coconut_Tree_1">
       <inherit name="editor_object" />
       <Full />
-      <displayverbs type="stringlist">
-        <value>Look at</value>
-      </displayverbs>
+      <displayverbs type="stringlist" />
       <shake type="script">
         if (Coconut_Tree_1.Full = true) {
           msg ("You and your crew shake vigorously. The coconut falls… and strikes one of your crew in the back of the head! You lose one crew but gain one deadly coconut.")
@@ -603,9 +602,7 @@
     <object name="Coconut_Tree_2">
       <inherit name="editor_object" />
       <Full />
-      <displayverbs type="stringlist">
-        <value>Look at</value>
-      </displayverbs>
+      <displayverbs type="stringlist" />
       <shake type="script">
         if (Coconut_Tree_2.Full = true) {
           msg ("You and your crew shake vigorously. The coconut falls! You gain one juicy coconut.")
@@ -635,9 +632,7 @@
     <object name="Tidal_Pool">
       <inherit name="editor_object" />
       <Is_Full />
-      <displayverbs type="stringlist">
-        <value>Look at</value>
-      </displayverbs>
+      <displayverbs type="stringlist" />
       <inspect type="script">
         if (Tidal_Pool.Is_Full = true) {
           msg ("You discover a tidal pool! It has crabs to eat. You take them.")
@@ -698,14 +693,12 @@
       <inherit name="editor_object" />
       <scenery type="boolean">false</scenery>
       <Opened type="boolean">false</Opened>
-      <displayverbs type="stringlist">
-        <value>Look at</value>
-      </displayverbs>
+      <displayverbs type="stringlist" />
       <openthechest type="script">
         if (Chest.Opened = False) {
           msg ("You open the chest and find it filled with gold and precious gems! However, your excitement is tempered as you watch the eyes of each skeleton light up with a blue-green glow as they turn to face you.  One by one, the skeletons pull themselves out of their crypts and attack! After a scuffle, you and your crew are able to slay the last skeleton and abscond with the treasure, but not without suffering heavy losses yourselves.")
           player.Crew = player.Crew - 3
-          Opened = True
+          Chest.Opened = True
         }
         else {
           msg ("The chest is already looted")
