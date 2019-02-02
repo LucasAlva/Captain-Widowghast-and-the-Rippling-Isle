@@ -12,11 +12,11 @@
     <Food type="int">0</Food>
     <Crew type="int">7</Crew>
     <Counter type="int">0</Counter>
-    <pov type="object">player</pov>
     <showdescriptiononenter />
     <autodescription />
     <attr name="autodescription_description" type="int">3</attr>
     <attr name="autodescription_youcango" type="int">4</attr>
+    <pov type="object">player</pov>
   </game>
   <object name="Beach">
     <inherit name="editor_room" />
@@ -56,6 +56,48 @@
     <exit alias="east" to="Beach_East_1">
       <inherit name="eastdirection" />
     </exit>
+    <object name="Leave">
+      <inherit name="editor_object" />
+      <usedefaultprefix type="boolean">false</usedefaultprefix>
+      <alias>Leave?</alias>
+      <leavetheisland type="script"><![CDATA[
+        if (player.Crew = 0) {
+          finish
+          msg ("All of your crew has perished, and with them any chance of getting off of the island.  But hey, at least there’s plenty of food.")
+          picture ("good ending.png")
+        }
+        else if (player.Food >= player.Crew + 1 and game.Counter > 1440) {
+          finish
+          msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>You spend over a week at sea, and while the damaged hull does worsen as you progress, you manage to get just within sight of port before the ship starts to sink.  You and your remaining crew swim ashore, soggy but otherwise unharmed, and watch the mast slowly slip beneath the waves.<br/>YOU MADE IT!<br/>")
+          picture ("good ending.png")
+        }
+        else if (player.Food >= player.Crew and game.Counter < 1440) {
+          finish
+          msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>You spend over a week at sea, and while the damaged hull does worsen as you progress, you manage to get into port and get it patched before it causes the ship to sink.  After a stressful week, you and your remaining crew celebrate your good fortune at the pub.<br/>YOU MADE IT!<br/>")
+          picture ("good ending.png")
+        }
+        else if (player.Food <= player.Crew/2  and game.Counter > 1440) {
+          finish
+          msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>As the days at sea wear on, it becomes painfully obvious the food you gathered will not be enough to get you and your crew to port.  After the events on the island, the crew blame you and your poor leadership for the predicament, and you find yourself facing a mutiny.  Your former crew tie you up and force you off of the gangplank, and you lose consciousness as you slowly sink to the bottom of the sea. If it’s any consolation, your crew will starve before getting to port anyway.<br/>YOU DIED<br/>")
+          picture ("bad ending.png")
+        }
+        else if (player.Food >= player.Crew/2  and game.Counter > 1440) {
+          msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>As the days at sea wear on, it becomes painfully obvious the food you gathered will not be enough to get you and your crew to port.  Because of your leadership decisions on the island, the crew squabbles over who’s to blame and a group of them try to mutiny.  You and your loyal crew members manage to quash the mutiny, but there’s so little food left that even with your crew numbers so depleted you won’t be able to last to port.  You and your remaining crew starve in the open ocean.<br/>YOU DIED<br/>")
+          picture ("bad ending.png")
+        }
+        else if (player.Crew/2 < player.Food and player.Food < player.Crew  and game.Counter > 1440 and game.Counter < 2880) {
+          finish
+          msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>You spend over a week at sea, and while food stores threatening to run out midway prompts an attempted mutiny, you and your loyal crew members cut down the rebelling crew.  The resulting thinning of the herd lets you spread your rations just enough to get into port and get it your hull patched before it causes the ship to sink.  After a stressful week, you and your remaining crew celebrate your relatively good fortune at the pub.<br/>YOU MADE IT!<br/>")
+          picture ("good ending.png")
+        }
+        else if (player.Crew/2 < player.Food and player.Food < player.Crew  and game.Counter > 2880) {
+          finish
+          msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>As the days at sea wear on, it becomes painfully obvious the food you gathered will not be enough to get you and your crew to port.  After the events on the island, the crew blame you and your poor leadership for the predicament, and you find yourself facing a mutiny.  Your former crew tie you up and force you off of the gangplank, and you lose consciousness as you slowly sink to the bottom of the sea. <br/>YOU DIED<br/>")
+          picture ("bad ending.png")
+        }
+      ]]></leavetheisland>
+      <displayverbs type="stringlist" />
+    </object>
   </object>
   <object name="First_Jungle_Path">
     <inherit name="editor_room" />
@@ -691,45 +733,6 @@
     <pattern>shake</pattern>
     <defaultexpression>"You can't shake " + object.article + "."</defaultexpression>
   </verb>
-  <turnscript name="Endings">
-    <enabled />
-    <script><![CDATA[
-      if (player.Crew = 0) {
-        finish
-        msg ("All of your crew has perished, and with them any chance of getting off of the island.  But hey, at least there’s plenty of food.")
-        picture ("good ending.png")
-      }
-      else if (player.Food >= player.Crew + 1 and game.Counter > 1440) {
-        finish
-        msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>You spend over a week at sea, and while the damaged hull does worsen as you progress, you manage to get just within sight of port before the ship starts to sink.  You and your remaining crew swim ashore, soggy but otherwise unharmed, and watch the mast slowly slip beneath the waves.<br/>YOU MADE IT!<br/>")
-        picture ("good ending.png")
-      }
-      else if (player.Food >= player.Crew and game.Counter < 1440) {
-        finish
-        msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>You spend over a week at sea, and while the damaged hull does worsen as you progress, you manage to get into port and get it patched before it causes the ship to sink.  After a stressful week, you and your remaining crew celebrate your good fortune at the pub.<br/>YOU MADE IT!<br/>")
-        picture ("good ending.png")
-      }
-      else if (player.Food <= player.Crew/2  and game.Counter > 1440) {
-        finish
-        msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>As the days at sea wear on, it becomes painfully obvious the food you gathered will not be enough to get you and your crew to port.  After the events on the island, the crew blame you and your poor leadership for the predicament, and you find yourself facing a mutiny.  Your former crew tie you up and force you off of the gangplank, and you lose consciousness as you slowly sink to the bottom of the sea. If it’s any consolation, your crew will starve before getting to port anyway.<br/>YOU DIED<br/>")
-        picture ("bad ending.png")
-      }
-      else if (player.Food >= player.Crew/2  and game.Counter > 1440) {
-        msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>As the days at sea wear on, it becomes painfully obvious the food you gathered will not be enough to get you and your crew to port.  Because of your leadership decisions on the island, the crew squabbles over who’s to blame and a group of them try to mutiny.  You and your loyal crew members manage to quash the mutiny, but there’s so little food left that even with your crew numbers so depleted you won’t be able to last to port.  You and your remaining crew starve in the open ocean.<br/>YOU DIED<br/>")
-        picture ("bad ending.png")
-      }
-      else if (player.Crew/2 < player.Food and player.Food < player.Crew  and game.Counter > 1440 and game.Counter < 2880) {
-        finish
-        msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>You spend over a week at sea, and while food stores threatening to run out midway prompts an attempted mutiny, you and your loyal crew members cut down the rebelling crew.  The resulting thinning of the herd lets you spread your rations just enough to get into port and get it your hull patched before it causes the ship to sink.  After a stressful week, you and your remaining crew celebrate your relatively good fortune at the pub.<br/>YOU MADE IT!<br/>")
-        picture ("good ending.png")
-      }
-      else if (player.Crew/2 < player.Food and player.Food < player.Crew  and game.Counter > 2880) {
-        finish
-        msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>As the days at sea wear on, it becomes painfully obvious the food you gathered will not be enough to get you and your crew to port.  After the events on the island, the crew blame you and your poor leadership for the predicament, and you find yourself facing a mutiny.  Your former crew tie you up and force you off of the gangplank, and you lose consciousness as you slowly sink to the bottom of the sea. <br/>YOU DIED<br/>")
-        picture ("bad ending.png")
-      }
-    ]]></script>
-  </turnscript>
   <object name="Shaky_Bridge_North">
     <inherit name="editor_room" />
     <exitslistprefix>To the west is a path. To the south is a bridge. The jungle certainly hasn’t been kind to this old rope bridge, as it is covered in moss and other plants, and several of the planks have begun to rot away.  As you test a plank with your foot, the entire structure creaks. You can go</exitslistprefix>
@@ -761,6 +764,16 @@
       <inherit name="eastdirection" />
     </exit>
   </object>
+  <verb>
+    <property>leave?</property>
+    <pattern>leave?</pattern>
+    <defaultexpression>"You can't leave? " + object.article + "."</defaultexpression>
+  </verb>
+  <verb>
+    <property>leavetheisland</property>
+    <pattern>leave the island</pattern>
+    <defaultexpression>"You can't leave the island " + object.article + "."</defaultexpression>
+  </verb>
   <timer name="Timer">
     <interval>1</interval>
     <enabled />
