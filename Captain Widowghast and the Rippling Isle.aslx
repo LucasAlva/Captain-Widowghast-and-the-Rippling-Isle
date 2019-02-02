@@ -67,33 +67,35 @@
           msg ("All of your crew has perished, and with them any chance of getting off of the island.  But hey, at least there’s plenty of food.")
           picture ("good ending.png")
         }
-        else if (player.Food >= player.Crew + 1) {
+        else if (player.Food >= player.Crew + 1 and game.Counter > 1440) {
           finish
           msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>You spend over a week at sea, and while the damaged hull does worsen as you progress, you manage to get just within sight of port before the ship starts to sink.  You and your remaining crew swim ashore, soggy but otherwise unharmed, and watch the mast slowly slip beneath the waves.<br/>YOU MADE IT!<br/>")
           picture ("good ending.png")
         }
-        else if (player.Food >= player.Crew) {
+        else if (player.Food >= player.Crew and game.Counter < 1440) {
           finish
           msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>You spend over a week at sea, and while the damaged hull does worsen as you progress, you manage to get into port and get it patched before it causes the ship to sink.  After a stressful week, you and your remaining crew celebrate your good fortune at the pub.<br/>YOU MADE IT!<br/>")
           picture ("good ending.png")
         }
-        else if (player.Food <= player.Crew/2) {
+        else if (player.Food <= player.Crew/2 and game.Counter < 1440) {
           finish
           msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>As the days at sea wear on, it becomes painfully obvious the food you gathered will not be enough to get you and your crew to port.  After the events on the island, the crew blame you and your poor leadership for the predicament, and you find yourself facing a mutiny.  Your former crew tie you up and force you off of the gangplank, and you lose consciousness as you slowly sink to the bottom of the sea. If it’s any consolation, your crew will starve before getting to port anyway.<br/>YOU DIED<br/>")
           picture ("bad ending.png")
         }
-        else if (player.Food >= player.Crew/2) {
-          msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>As the days at sea wear on, it becomes painfully obvious the food you gathered will not be enough to get you and your crew to port.  Because of your leadership decisions on the island, the crew squabbles over who’s to blame and a group of them try to mutiny.  You and your loyal crew members manage to quash the mutiny, but there’s so little food left that even with your crew numbers so depleted you won’t be able to last to port.  You and your remaining crew starve in the open ocean.<br/>YOU DIED<br/>")
-          picture ("bad ending.png")
-        }
-        else if (player.Crew/2 < player.Food and player.Food < player.Crew) {
+        else if (player.Crew/2 < player.Food and player.Food < player.Crew and game.Counter < 1440) {
           finish
           msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>You spend over a week at sea, and while food stores threatening to run out midway prompts an attempted mutiny, you and your loyal crew members cut down the rebelling crew.  The resulting thinning of the herd lets you spread your rations just enough to get into port and get it your hull patched before it causes the ship to sink.  After a stressful week, you and your remaining crew celebrate your relatively good fortune at the pub.<br/>YOU MADE IT!<br/>")
           picture ("good ending.png")
         }
-        else if (player.Crew/2 < player.Food and player.Food < player.Crew) {
+        else if (game.Counter > 2160 and game.Counter < 2880) {
           finish
-          msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>As the days at sea wear on, it becomes painfully obvious the food you gathered will not be enough to get you and your crew to port.  After the events on the island, the crew blame you and your poor leadership for the predicament, and you find yourself facing a mutiny.  Your former crew tie you up and force you off of the gangplank, and you lose consciousness as you slowly sink to the bottom of the sea. <br/>YOU DIED<br/>")
+          msg ("You bark out orders to your crew to begin loading up the boat for the journey back to port.  Soon enough you are underway, and watch the island disappear over the horizon.<br/>---<br/>As the days at sea wear on, it becomes painfully obvious the leak in your hull has worsened beyond your ability to manage.  Try as you might to speed to port, the ship begins to sink on the open ocean, and it takes you and all your remaining crew with it. Guess you should have been a bit faster getting food.<br/>YOU DIED<br/>")
+          picture ("bad ending.png")
+        }
+        else if (game.Counter > 2880) {
+          finish
+          msg ("You return to the beach and your ship… or what’s left of it.  It looks like the leak in your hull finally became too much, and all that’s left unsubmerged is the crow’s nest.  Your crew is not happy, and it doesn’t take them long to blame you for their misfortune.  Unfortunately for you, their frustration manifests as a dagger in your gut, and you quickly bleed out onto the sand.<br/>YOU DIED<br/>")
+          finish
           picture ("bad ending.png")
         }
       ]]></leavetheisland>
